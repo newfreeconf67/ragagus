@@ -1,0 +1,207 @@
+<!doctype html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>PingNex</title>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#F2F5FB;--card:#fff;--ink:#0F1B33;--mute:#62708C;--line:#DDE4F0;--sig:#2F6BFF;--ok:#12B28F;--warn:#E9962A;--bad:#E5484D;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#0B1226;--card:#121C38;--ink:#EAF0FF;--mute:#8FA0C4;--line:#22305A;--sig:#5B8CFF;color-scheme:dark}}
+:root[data-theme=dark]{--bg:#0B1226;--card:#121C38;--ink:#EAF0FF;--mute:#8FA0C4;--line:#22305A;--sig:#5B8CFF;color-scheme:dark}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:400 15px/1.7 Vazirmatn,Tahoma,sans-serif}
+main{max-width:480px;margin:0 auto;padding:20px 16px 40px;display:grid;gap:14px}
+header{display:flex;align-items:center;justify-content:space-between;padding:4px 2px}
+.brand{display:flex;align-items:center;gap:10px;font:800 22px/1 Vazirmatn,sans-serif;direction:ltr;letter-spacing:-.3px}
+.brand svg{width:30px;height:30px}
+.brand b{color:var(--sig)}
+.chip{font-size:13px;padding:2px 12px;border-radius:99px;background:color-mix(in srgb,var(--ok) 16%,transparent);color:var(--ok);font-weight:600}
+.chip.off{background:color-mix(in srgb,var(--bad) 16%,transparent);color:var(--bad)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:20px;padding:18px}
+.hero{padding:22px 18px 14px;overflow:hidden}
+.hero .top{display:flex;justify-content:space-between;align-items:flex-start}
+.lbl{color:var(--mute);font-size:13px}
+.ping{font:800 64px/1 Vazirmatn,sans-serif;direction:ltr;display:inline-flex;align-items:baseline;gap:6px;margin-top:6px}
+.ping small{font:600 18px Vazirmatn,sans-serif;color:var(--mute)}
+.dot{width:10px;height:10px;border-radius:50%;background:var(--ok);display:inline-block;margin-inline-end:6px;box-shadow:0 0 0 0 var(--ok);animation:p 2s infinite}
+@keyframes p{70%{box-shadow:0 0 0 9px transparent}100%{box-shadow:0 0 0 0 transparent}}
+@media(prefers-reduced-motion:reduce){.dot{animation:none}}
+svg.spark{width:calc(100% + 36px);margin:8px -18px -14px;height:70px;display:block;direction:ltr}
+.row{display:flex;justify-content:space-between;align-items:baseline;gap:8px}
+.big{font:800 22px/1.3 Vazirmatn,sans-serif}
+.bar{height:10px;border-radius:9px;background:var(--line);margin:12px 0 6px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:9px;background:var(--sig);transition:width .8s}
+.grid{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.cd{font:800 20px/1.4 Vazirmatn,sans-serif}
+.link{display:flex;gap:8px;margin-top:10px}
+.link input{flex:1;min-width:0;direction:ltr;font:13px ui-monospace,monospace;padding:10px 12px;border-radius:12px;border:1px solid var(--line);background:var(--bg);color:var(--ink)}
+button,.app{font:600 14px Vazirmatn,sans-serif;border:0;border-radius:12px;padding:10px 16px;background:var(--sig);color:#fff;cursor:pointer;text-decoration:none;text-align:center}
+button:focus-visible,.app:focus-visible,input:focus-visible,summary:focus-visible{outline:3px solid var(--sig);outline-offset:2px}
+.apps{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:12px}
+.app{background:var(--bg);color:var(--ink);border:1px solid var(--line)}
+details summary{cursor:pointer;font-weight:600}
+.cfg{display:flex;gap:8px;align-items:center;margin-top:10px}
+.cfg span{flex:1;min-width:0;direction:ltr;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font:12px ui-monospace,monospace;color:var(--mute)}
+.cfg button{padding:6px 12px;font-size:13px}
+.tabs{display:flex;gap:6px;margin-top:12px;padding:4px;background:var(--bg);border-radius:14px}
+.tabs button{flex:1;background:transparent;color:var(--mute);padding:8px 4px;font-size:13px}
+.tabs button[aria-selected=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 3px rgba(0,0,0,.12)}
+.ap{border:1px solid var(--line);border-radius:16px;padding:14px;margin-top:10px}
+.ap h3{margin:0;font:800 16px Vazirmatn,sans-serif;direction:ltr;text-align:right}
+.ap p{margin:2px 0 10px;color:var(--mute);font-size:13px}
+.ap .bt{display:flex;flex-wrap:wrap;gap:8px}
+.ap .bt a{flex:1 1 auto;min-width:96px}
+.app.pri{background:var(--sig);color:#fff;border:0}
+.hint{font-size:12px;color:var(--mute);margin-top:10px}
+footer{text-align:center;color:var(--mute);font-size:12px}
+</style>
+</head>
+<body>
+<main>
+  <header>
+    <div class="brand">
+      <svg viewBox="0 0 32 32" fill="none" aria-hidden="true"><rect width="32" height="32" rx="9" fill="var(--sig)"/><path d="M4 17h6l3-8 5 15 3-7h7" stroke="#fff" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/></svg>
+      <span>Ping<b>Nex</b></span>
+    </div>
+    <span class="chip" id="status">…</span>
+  </header>
+
+  <section class="card hero" aria-live="off">
+    <div class="top">
+      <div>
+        <div class="lbl"><span class="dot" id="dot"></span>پینگ زنده تا سرور</div>
+        <div class="ping"><span id="ms">--</span><small>ms</small></div>
+      </div>
+      <div class="lbl" id="user" style="text-align:left;direction:ltr"></div>
+    </div>
+    <svg class="spark" viewBox="0 0 300 70" preserveAspectRatio="none" aria-hidden="true">
+      <defs><linearGradient id="g" x1="0" x2="0" y1="0" y2="1"><stop offset="0" stop-color="var(--sig)" stop-opacity=".35"/><stop offset="1" stop-color="var(--sig)" stop-opacity="0"/></linearGradient></defs>
+      <path id="area" fill="url(#g)"/><polyline id="line" fill="none" stroke="var(--sig)" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round" vector-effect="non-scaling-stroke"/>
+    </svg>
+  </section>
+
+  <section class="card">
+    <div class="row"><span class="lbl">حجم مصرف‌شده</span><span class="lbl" id="pct"></span></div>
+    <div class="big" id="used">--</div>
+    <div class="bar"><i id="fill"></i></div>
+    <div class="lbl" id="left"></div>
+  </section>
+
+  <section class="card">
+    <div class="lbl">زمان باقی‌مانده</div>
+    <div class="cd" id="cd">--</div>
+    <div class="lbl" id="exp"></div>
+  </section>
+
+  <section class="card">
+    <div class="big" style="font-size:17px">اتصال با یک لمس</div>
+    <div class="tabs" role="tablist" id="tabs"></div>
+    <div id="apps"></div>
+    <div class="hint">اول برنامه رو نصب کن، بعد «افزودن اشتراک» رو بزن تا خودکار اضافه بشه.</div>
+    <div class="lbl" style="margin-top:14px">لینک اشتراک</div>
+    <div class="link"><input id="sub" readonly aria-label="لینک اشتراک"><button id="copy">کپی</button></div>
+  </section>
+
+  <section class="card" id="cfgBox" hidden>
+    <details><summary>کانفیگ‌های تکی</summary><div id="cfgs"></div></details>
+  </section>
+
+  <footer>PingNex · اتصال سریع، پایدار و امن</footer>
+</main>
+<script>
+const $=s=>document.querySelector(s), fa=n=>Number(n).toLocaleString('fa-IR');
+const base=location.pathname.replace(/\/+$/,'');
+const ST={active:'فعال',disabled:'غیرفعال',limited:'حجم تمام شده',expired:'منقضی',on_hold:'در انتظار'};
+const demo={username:'demo_user',status:'active',used_traffic:12.4*2**30,data_limit:50*2**30,
+  expire:Math.floor(Date.now()/1000)+12*86400+4*3600,links:['vless://demo#PingNex-1','trojan://demo#PingNex-2']};
+let U=demo, isDemo=true, FULL='';
+const GP='https://play.google.com/store/apps/details?id=',AS='https://apps.apple.com/app/',GH='https://github.com/';
+const PF={android:'اندروید',ios:'آیفون',windows:'ویندوز',mac:'مک'};
+const APPS={
+ android:[
+  {n:'Hiddify',d:'پیشنهاد ما · ساده و کامل',dl:[['Google Play',GP+'app.hiddify.com'],['دانلود APK',GH+'hiddify/hiddify-app/releases/latest']],imp:f=>'hiddify://import/'+f},
+  {n:'v2rayNG',d:'سبک و محبوب',dl:[['Google Play',GP+'com.v2ray.ang'],['دانلود APK',GH+'2dust/v2rayNG/releases/latest']],imp:f=>'v2rayng://install-config?url='+encodeURIComponent(f)},
+  {n:'sing-box',d:'حرفه‌ای',dl:[['Google Play',GP+'io.nekohasekai.sfa'],['دانلود APK',GH+'SagerNet/sing-box/releases/latest']],imp:f=>'sing-box://import-remote-profile?url='+encodeURIComponent(f)}],
+ ios:[
+  {n:'Streisand',d:'پیشنهاد ما · سریع و پایدار',dl:[['App Store',AS+'streisand/id6450534064']],imp:f=>'streisand://import/'+f},
+  {n:'Hiddify',d:'ساده و کامل',dl:[['App Store',AS+'hiddify-proxy-vpn/id6596777532']],imp:f=>'hiddify://import/'+f},
+  {n:'sing-box',d:'حرفه‌ای',dl:[['App Store',AS+'sing-box-vt/id6673731168']],imp:f=>'sing-box://import-remote-profile?url='+encodeURIComponent(f)}],
+ windows:[
+  {n:'Hiddify',d:'پیشنهاد ما · نصب آسان',dl:[['دانلود برای ویندوز',GH+'hiddify/hiddify-app/releases/latest']],imp:f=>'hiddify://import/'+f},
+  {n:'v2rayN',d:'کلاسیک و قدرتمند',dl:[['دانلود برای ویندوز',GH+'2dust/v2rayN/releases/latest']],imp:f=>'v2rayn://install-config?url='+encodeURIComponent(f)}],
+ mac:[
+  {n:'Hiddify',d:'پیشنهاد ما',dl:[['دانلود برای مک',GH+'hiddify/hiddify-app/releases/latest']],imp:f=>'hiddify://import/'+f},
+  {n:'Streisand',d:'مخصوص مک‌های اپل سیلیکون',dl:[['App Store',AS+'streisand/id6450534064']],imp:f=>'streisand://import/'+f}]
+};
+const ua=navigator.userAgent;
+let plat=/android/i.test(ua)?'android':/iphone|ipad|ipod/i.test(ua)?'ios':/windows/i.test(ua)?'windows':/mac/i.test(ua)?'mac':'android';
+function renderApps(){
+  $('#tabs').innerHTML=Object.keys(PF).map(k=>`<button role="tab" data-k="${k}" aria-selected="${k===plat}">${PF[k]}</button>`).join('');
+  $('#apps').innerHTML=APPS[plat].map(a=>`<div class="ap"><h3>${a.n}</h3><p>${a.d}</p><div class="bt">`+
+    a.dl.map(d=>`<a class="app" href="${d[1]}" target="_blank" rel="noopener">${d[0]}</a>`).join('')+
+    `<a class="app pri" href="${a.imp(FULL)}">افزودن اشتراک</a></div></div>`).join('');
+}
+$('#tabs').onclick=e=>{const b=e.target.closest('button');if(b){plat=b.dataset.k;renderApps()}};
+
+const gb=b=>b>=2**30?fa((b/2**30).toFixed(2))+' گیگابایت':fa((b/2**20).toFixed(1))+' مگابایت';
+async function copy(t,btn){try{await navigator.clipboard.writeText(t)}catch(e){const i=document.createElement('input');i.value=t;document.body.append(i);i.select();document.execCommand('copy');i.remove()}
+  const o=btn.textContent;btn.textContent='کپی شد';setTimeout(()=>btn.textContent=o,1200)}
+
+async function load(){
+  try{const r=await fetch(base+'/info',{headers:{accept:'application/json'},cache:'no-store'});if(!r.ok)throw 0;U=await r.json();isDemo=false}
+  catch(e){}
+  render();
+}
+function render(){
+  const ok=U.status==='active'||U.status==='on_hold';
+  $('#status').textContent=ST[U.status]||U.status;$('#status').classList.toggle('off',!ok);
+  $('#user').textContent=U.username;
+  const lim=U.data_limit||0,used=U.used_traffic||0;
+  $('#used').textContent=gb(used);
+  if(lim){const p=Math.min(100,used/lim*100);$('#fill').style.width=p+'%';$('#fill').style.background=p>90?'var(--bad)':p>70?'var(--warn)':'var(--sig)';
+    $('#pct').textContent=fa(Math.round(p))+'٪';$('#left').textContent='از '+gb(lim)+' · '+gb(Math.max(0,lim-used))+' باقی‌مانده'}
+  else{$('#fill').style.width='8%';$('#pct').textContent='';$('#left').textContent='حجم نامحدود'}
+  const sub=U.subscription_url||(U.sub_url)||location.origin+base;
+  const full=sub.startsWith('http')?sub:location.origin+sub;
+  $('#sub').value=full;
+  const e=encodeURIComponent(full);
+  FULL=full;renderApps();
+  const L=U.links||[];$('#cfgBox').hidden=!L.length;
+  $('#cfgs').innerHTML=L.map((l,i)=>`<div class="cfg"><span>${l.replace(/</g,'&lt;')}</span><button data-i="${i}">کپی</button></div>`).join('');
+  $('#cfgs').onclick=ev=>{const b=ev.target.closest('button');if(b)copy(L[b.dataset.i],b)};
+  tick();
+}
+function tick(){
+  if(!U.expire){$('#cd').textContent='نامحدود';$('#exp').textContent='';return}
+  let s=U.expire-Math.floor(Date.now()/1000);
+  if(s<=0){$('#cd').textContent='منقضی شده';$('#exp').textContent='';return}
+  const d=Math.floor(s/86400),h=Math.floor(s%86400/3600),m=Math.floor(s%3600/60),c=s%60;
+  $('#cd').textContent=(d?fa(d)+' روز ':'')+fa(h)+' ساعت '+fa(m)+' دقیقه '+fa(c)+' ثانیه';
+  $('#exp').textContent='پایان: '+new Date(U.expire*1000).toLocaleDateString('fa-IR',{year:'numeric',month:'long',day:'numeric'});
+}
+const pts=[];
+async function ping(){
+  const t=performance.now();let v=null;
+  try{await fetch(base+'/info?_='+Date.now(),{method:'HEAD',cache:'no-store'});v=Math.round(performance.now()-t)}catch(e){}
+  if(v===null&&isDemo)v=28+Math.round(Math.random()*30);
+  pts.push(v);if(pts.length>40)pts.shift();draw(v);
+}
+function draw(v){
+  const ok=pts.filter(x=>x!==null),mx=Math.max(100,...ok)*1.15;
+  $('#ms').textContent=v===null?'—':fa(v);
+  const col=v===null?'var(--bad)':v<120?'var(--ok)':v<300?'var(--warn)':'var(--bad)';
+  $('#ms').style.color=col;$('#dot').style.background=col;
+  const step=300/39,xs=i=>300-(pts.length-1-i)*step;
+  const P=pts.map((x,i)=>x===null?null:[xs(i),66-(x/mx)*60]).filter(Boolean);
+  if(!P.length)return;
+  const d=P.map(p=>p[0].toFixed(1)+','+p[1].toFixed(1)).join(' ');
+  $('#line').setAttribute('points',d);
+  $('#area').setAttribute('d','M'+P[0][0]+',70 L'+d.replace(/ /g,' L')+' L'+P.at(-1)[0]+',70Z');
+}
+$('#copy').onclick=e=>copy($('#sub').value,e.target);
+load();ping();
+setInterval(tick,1000);setInterval(ping,2000);setInterval(load,20000);
+</script>
+</body>
+</html>
